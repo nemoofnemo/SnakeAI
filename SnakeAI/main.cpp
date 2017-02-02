@@ -80,7 +80,7 @@ public:
 		return true;
 	}
 
-	bool MoveFoward(Vector2 direction) {
+	bool MoveFoward(Vector2 direction, bool addHistory = true) {
 		if ((direction.x >= 0 ? direction.x : -direction.x) > 1) {
 			direction.x /= direction.x;
 		}
@@ -91,7 +91,11 @@ public:
 
 		list<Node>::iterator it = snake.begin();
 		list<Node>::iterator end = snake.end();
-		pathHistory.push_front(snake);
+
+		if (addHistory) {
+			pathHistory.push_front(snake);
+		}
+
 		Point dest = it->point + direction;
 		int num = 0;
 		Vector2 prev = direction;
@@ -135,34 +139,22 @@ private:
 	//map array
 	static const int WIDTH = 20;
 	static const int LENGTH = 20;
-	char map[WIDTH][LENGTH] ;
-	char calcMap[WIDTH][LENGTH] ;
 
 	//snake: head&body
-	list<Node> snake;
-	list<Node> calcSnake;
+	Snake snake;
+	char map[WIDTH][LENGTH];
 
-	int count;
+	Snake calcSnake;
+	char calcMap[WIDTH][LENGTH];
+
 	int score;
-
-
 
 public:
 	Main() {
 		memset(map, '.', sizeof(char) * WIDTH * LENGTH);
 		
 		score = 0;
-		count = 1;
-
-		Node n = { { 0,0 }, DOWN };
-		snake.push_back(n);
 	}
-
-	void moveFoward(list<Node> * list) {
-		
-	}
-
-
 
 	void show() {
 		for (int i = 0; i < WIDTH; ++i) {
