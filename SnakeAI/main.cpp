@@ -136,6 +136,7 @@ public:
 
 class Main {
 private:
+public:
 	//map array
 	static const int WIDTH = 20;
 	static const int LENGTH = 20;
@@ -146,6 +147,7 @@ private:
 
 	Snake calcSnake;
 	char calcMap[WIDTH][LENGTH];
+	list<Node> path;
 
 	int score;
 
@@ -162,6 +164,17 @@ public:
 				printf("%2c", map[i][d]);
 			}
 			putchar('\n');
+		}
+	}
+
+	void MapSnake(Snake & s, char* arr[WIDTH]) {
+		list<Node> l = s.GetSnake();
+		list<Node>::iterator it = l.begin();
+		list<Node>::iterator end = l.end();
+
+		while (it != end) {
+			arr[it->point.x][it->point.y] = 'O';
+			++it;
 		}
 	}
 
